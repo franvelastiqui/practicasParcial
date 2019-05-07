@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1555426905 source:c:\users\alumno\desktop\abm\main.c
+	<stdlib.h>
+	"Empleado.h"
+
+1555426579 c:\users\alumno\desktop\abm\empleado.h
+	<stdio.h>
+
+1555426943 source:c:\users\alumno\desktop\abm\empleado.c
+	"Empleado.h"
+
+1556546762 source:c:\users\alumno\desktop\programacion-1c-master\abm\empleado.c
+	"Empleado.h"
+
+1556542442 c:\users\alumno\desktop\programacion-1c-master\abm\empleado.h
+	<stdio.h>
+	"string.h"
+
+1556544712 source:c:\users\alumno\desktop\programacion-1c-master\abm\main.c
+	<stdlib.h>
+	"Empleado.h"
+
+1556029198 source:c:\users\alumno\downloads\programacion-1c-master\abm\empleado.c
+	"Empleado.h"
+
+1556029198 c:\users\alumno\downloads\programacion-1c-master\abm\empleado.h
+	<stdio.h>
+
+1556029198 source:c:\users\alumno\downloads\programacion-1c-master\abm\main.c
+	<stdlib.h>
+	"Empleado.h"
+
+1556546831 source:c:\users\paola\desktop\programacion-1c-master\abm\empleado.c
+	"Empleado.h"
+
+1556546831 c:\users\paola\desktop\programacion-1c-master\abm\empleado.h
+	<stdio.h>
+	"string.h"
+
+1556546831 source:c:\users\paola\desktop\programacion-1c-master\abm\main.c
+	<stdlib.h>
+	"Empleado.h"
+

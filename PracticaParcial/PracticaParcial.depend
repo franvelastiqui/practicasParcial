@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1557205631 source:c:\users\paola\desktop\practicaparcial\funciones.c
+	"funciones.h"
+
+1557205761 c:\users\paola\desktop\practicaparcial\funciones.h
+	<stdio.h>
+	"string.h"
+
+1557205664 source:c:\users\paola\desktop\practicaparcial\main.c
+	<stdlib.h>
+	"funciones.h"
+

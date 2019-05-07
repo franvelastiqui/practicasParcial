@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1557242191 source:d:\nueva carpeta\velastiquifrancoprimerparcial\funciones.c
+	"funciones.h"
+
+1557242025 d:\nueva carpeta\velastiquifrancoprimerparcial\funciones.h
+	<stdio.h>
+	"string.h"
+
+1557242432 source:d:\nueva carpeta\velastiquifrancoprimerparcial\main.c
+	<stdlib.h>
+	"funciones.h"
+

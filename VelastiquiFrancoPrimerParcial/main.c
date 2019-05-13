@@ -12,11 +12,11 @@ int main()
     ePeliculas peliculas[TAM];
     eFechas fechas[TAM];
     eGeneros generos[5] = {{1,"Accion"},{2,"Comedia"},{3,"Drama"},{4,"Romance"},{5,"Terror"}};
-    eActores actores[TA]={{1,"Scarlett Johansson","Argentina"},{2,"Robert Downey Jr","EEUU"},{3,"Mark Ruffalo","Camada"},{4,"Chris Evans","EEUU"},{5,"Chris Hemsworth","Argentina"},{6,"Samuel Jackson","EEUU"},{7,"Gwyneth Paltrow","Canada"},{8,"Paul Rudd","Argentina"},{9,"Bradley Cooper","EEUU"},{10,"Josh Brolin","Canada"}};
+    eActores actores[TA]={{1,"Scarlett Johansson","Argentina"},{2,"Robert Downey Jr","EEUU"},{3,"Mark Ruffalo","Canada"},{4,"Chris Evans","EEUU"},{5,"Chris Hemsworth","Argentina"},{6,"Samuel Jackson","EEUU"},{7,"Gwyneth Paltrow","Canada"},{8,"Paul Rudd","Argentina"},{9,"Bradley Cooper","EEUU"},{10,"Josh Brolin","Canada"}};
 
-    inicializarPeliculas(peliculas,TAM);
+    inicializarPeliculasyActores(peliculas,TAM,actores,TA);
 
-    hardcodearDatos(peliculas,20,fechas);
+    hardcodearDatos(peliculas,20,fechas,actores,10);
 
     do
     {
@@ -25,19 +25,19 @@ int main()
         switch(opcion)
         {
         case 1:
-            agregarPelicula(peliculas,TAM,generos,5,actores,10,fechas);
+            agregarPelicula(peliculas,TAM,generos,5,actores,TA,fechas);
             break;
         case 2:
-            modificarPelicula(peliculas,TAM,actores,10,fechas,generos,TAM);
+            modificarPelicula(peliculas,TAM,actores,TA,fechas,generos,TAM);
             break;
         case 3:
-            bajarPelicula(peliculas,TAM,actores,10,fechas,generos,TAM);
+            bajarPelicula(peliculas,TAM,actores,TA,fechas,generos,TAM);
             break;
         case 4:
-            mostrarListaPeliculasPorAnio(peliculas,TAM,generos,TAM,actores,20,fechas);
+            mostrarListaPeliculasPorAnio(peliculas,TAM,generos,TAM,actores,TA,fechas);
             break;
         case 5:
-            mostrarListaActores(actores,20);
+            mostrarListaActores(actores,TA);
             break;
 
         }

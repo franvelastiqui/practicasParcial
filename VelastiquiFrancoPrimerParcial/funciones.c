@@ -3,13 +3,18 @@
 #define LIBRE 0
 #define OCUPADO 1
 
-void inicializarPeliculas(ePeliculas peliculas[],int tp)
+void inicializarPeliculasyActores(ePeliculas peliculas[],int tp,eActores actores[],int ta)
 {
     int i;
 
     for(i=0; i<tp; i++)
     {
         peliculas[i].estado= LIBRE;
+    }
+
+    for(i=0; i<ta; i++)
+    {
+        actores[i].estadoActor= LIBRE;
     }
 }
 
@@ -36,6 +41,7 @@ void agregarPelicula(ePeliculas peliculas[],int tp,eGeneros generos[],int tg,eAc
 {
     int i;
     int j;
+    int flag=0;
 
     i=buscarLibre(peliculas,tp);
 
@@ -51,23 +57,56 @@ void agregarPelicula(ePeliculas peliculas[],int tp,eGeneros generos[],int tg,eAc
 
         fechas[i].idFecha = i;
 
-        fechas[i].dia=pedirInt("Ingrese el dia de estreno: ");
-        fechas[i].mes=pedirInt("Ingrese el mes de estreno: ");
-        fechas[i].anio=pedirInt("Ingrese el año de estreno: ");
+        fechas[i].anio=validarDato("Ingrese el año de estreno: ", 1900, 2019);
+
+        fechas[i].mes=validarDato("Ingrese el mes de estreno: ", 1, 12);
+        if(fechas[i].mes==2)
+        {
+            if(fechas[i].anio%100==0)
+            {
+                if(fechas[i].anio%400==0)
+                {
+                    fechas[i].dia=validarDato("Ingrese el dia de estreno: ", 1, 29);
+                    flag=1;
+                }
+            }
+            else
+            {
+                if(fechas[i].anio%4==0)
+                {
+                    fechas[i].dia=validarDato("Ingrese el dia de estreno: ", 1, 29);
+                    flag=1;
+                }
+            }
+            if(flag==0)
+            {
+                fechas[i].dia=validarDato("Ingrese el dia de estreno: ", 1, 28);
+            }
+        }
+        else if(fechas[i].mes==4 || fechas[i].mes==6 || fechas[i].mes==9 || fechas[i].mes==11)
+        {
+            fechas[i].dia=validarDato("Ingrese el dia de estreno: ", 1, 30);
+        }
+        else
+        {
+            fechas[i].dia=validarDato("Ingrese el dia de estreno: ", 1, 31);
+        }
 
         for(j=0; j<tg; j++)
         {
             printf("%d\t %s\n",generos[j].idGenero, generos[j].genero);
         }
-        printf("Elija genero:\n");
-        scanf("%d", &peliculas[i].idGenero);
+
+        peliculas[i].idGenero=validarDato("Elija genero: ",1,5);
 
         for(j=0; j<ta; j++)
         {
-            printf("%d\t\t%s\t\t%s\n",actores[j].idActor, actores[j].nombre, actores[j].paisOrigen);
+            if(actores[j].estadoActor!=LIBRE)
+            {
+                printf("%d\t\t%s\t\t%s\n",actores[j].idActor, actores[j].nombre, actores[j].paisOrigen);
+            }
         }
-        printf("Elija actor:\n");
-        scanf("%d", &peliculas[i].idActor);
+        peliculas[i].idActor=validarDato("Elija genero: ",1,10);
 
         peliculas[i].estado=OCUPADO;
     }
@@ -79,7 +118,7 @@ void agregarPelicula(ePeliculas peliculas[],int tp,eGeneros generos[],int tg,eAc
 
 //_____________________________________________________
 
-void hardcodearDatos(ePeliculas peliculas[],int tp,eFechas fechas[])
+void hardcodearDatos(ePeliculas peliculas[],int tp,eFechas fechas[],eActores actores[],int ta)
 {
     int i;
     int idPeliculas[]= {1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020};
@@ -105,6 +144,12 @@ void hardcodearDatos(ePeliculas peliculas[],int tp,eFechas fechas[])
         peliculas[i].estado = OCUPADO;
 
     }
+
+    for(i=0; i<ta; i++)
+    {
+        actores[i].estadoActor=OCUPADO;
+    }
+
 }
 
 //_____________________________________________________
@@ -121,13 +166,45 @@ int pedirInt(char mensaje[])
 
 //_____________________________________________________
 
+int validarDato(char mensaje[], int minimo, int maximo)
+{
+    int numero;
+
+    printf(mensaje);
+    scanf("%d",&numero);
+    while(numero>maximo || numero<minimo)
+    {
+        printf("Error. Por favor, reingrese: ");
+        scanf("%d",&numero);
+    }
+    return numero;
+}
+
+//_____________________________________________________
+
+char pedirChar(char texto[])
+{
+    char caracter;
+    printf(texto);
+    fflush(stdin);
+    scanf("%c",&caracter);
+
+    return caracter;
+}
+
+//_____________________________________________________
+
 void modificarPelicula(ePeliculas peliculas[],int tp,eActores actores[],int ta,eFechas fechas[],eGeneros generos[], int tg)
 {
     int i;
     int j;
     int flag=0;
+    int flagFecha=0;
     int opcion;
     int idP;
+    char confirmacion;
+    ePeliculas auxiliar;
+    eFechas auxiliarF;
 
     idP=pedirInt("Ingrese el id de la pelicula a modificar: ");
 
@@ -143,26 +220,84 @@ void modificarPelicula(ePeliculas peliculas[],int tp,eActores actores[],int ta,e
             case 1:
                 printf("Ingrese el nuevo titulo: ");
                 fflush(stdin);
-                gets(peliculas[i].titulo);
+                gets(auxiliar.titulo);
+                confirmacion=pedirChar("Ingrese s para confirmar la operacion u otra tecla para salir: ");
+                if(confirmacion=='s')
+                {
+                    strcpy(peliculas[i].titulo, auxiliar.titulo);
+                }
                 flag=1;
                 break;
             case 2:
                 for(j=0; j<ta; j++)
                 {
-                    printf("%d\t\t%s\t\t%s\n",actores[j].idActor, actores[j].nombre, actores[j].paisOrigen);
+                    if(actores[j].estadoActor!=LIBRE)
+                    {
+                        printf("%d\t\t%s\t\t%s\n",actores[j].idActor, actores[j].nombre, actores[j].paisOrigen);
+                    }
                 }
-                printf("Elija actor:\n");
-                scanf("%d", &peliculas[i].idActor);
+                peliculas[i].idActor=validarDato("Elija actor: ",1,10);
+                confirmacion=pedirChar("Ingrese s para confirmar la operacion u otra tecla para salir: ");
+                if(confirmacion=='s')
+                {
+                    peliculas[i].idActor= auxiliar.idActor;
+                }
                 flag=1;
                 break;
             case 3:
-                peliculas[i].idFecha=i;
+                auxiliar.idFecha=i;
 
-                fechas[i].idFecha = i;
+                auxiliarF.idFecha = i;
 
-                fechas[i].dia=pedirInt("Ingrese el dia de estreno: ");
-                fechas[i].mes=pedirInt("Ingrese el mes de estreno: ");
-                fechas[i].anio=pedirInt("Ingrese el año de estreno: ");
+
+                auxiliarF.anio=validarDato("Ingrese el año de estreno: ", 1900, 2019);
+
+                auxiliarF.mes=validarDato("Ingrese el mes de estreno: ", 1, 12);
+                if(auxiliarF.mes==2)
+                {
+                    if(auxiliarF.anio%100==0)
+                    {
+                        if(auxiliarF.anio%400==0)
+                        {
+                            auxiliarF.dia=validarDato("Ingrese el dia de estreno: ", 1, 29);
+                            flagFecha=1;
+                        }
+                    }
+                    else
+                    {
+                        if(auxiliarF.anio%4==0)
+                        {
+                            auxiliarF.dia=validarDato("Ingrese el dia de estreno: ", 1, 29);
+                            flagFecha=1;
+                        }
+                    }
+                    if(flagFecha==0)
+                    {
+                        auxiliarF.dia=validarDato("Ingrese el dia de estreno: ", 1, 28);
+                    }
+                }
+                else if(auxiliarF.mes==4 || auxiliarF.mes==6 || auxiliarF.mes==9 || auxiliarF.mes==11)
+                {
+                    auxiliarF.dia=validarDato("Ingrese el dia de estreno: ", 1, 30);
+                }
+                else
+                {
+                    auxiliarF.dia=validarDato("Ingrese el dia de estreno: ", 1, 31);
+                }
+
+
+                confirmacion=pedirChar("Ingrese s para confirmar la operacion u otra tecla para salir: ");
+                if(confirmacion=='s')
+                {
+                    peliculas[i].idFecha=auxiliar.idFecha;
+
+                    fechas[i].idFecha =auxiliarF.idFecha;
+
+                    fechas[i].dia=auxiliarF.dia;
+                    fechas[i].mes=auxiliarF.mes;
+                    fechas[i].anio=auxiliarF.anio;
+                }
+
                 flag=1;
                 break;
             case 4:
@@ -185,6 +320,7 @@ void bajarPelicula(ePeliculas peliculas[], int tp, eActores actores[], int ta, e
     int i;
     int idP;
     int flag=0;
+    char confirmacion;
 
     idP=pedirInt("Ingrese el id de la pelicula a dar de baja: ");
 
@@ -194,7 +330,12 @@ void bajarPelicula(ePeliculas peliculas[], int tp, eActores actores[], int ta, e
         {
             printf("Se dara de baja la siguiente pelicula:\n");
             mostrarPelicula(peliculas[i],fechas[i],generos, tg, actores,ta);
-            peliculas[i].estado = LIBRE;
+
+            confirmacion=pedirChar("Ingrese s para confirmar la operacion u otra tecla para salir: ");
+            if(confirmacion=='s')
+            {
+                peliculas[i].estado=LIBRE;
+            }
             flag=1;
         }
     }
@@ -211,7 +352,6 @@ void mostrarPelicula(ePeliculas unaPelicula, eFechas Fecha, eGeneros generos[], 
     int i;
     char genero[21];
     char actor[31];
-    char pais[31];
 
     for(i=0; i<tg; i++)
     {
@@ -224,15 +364,14 @@ void mostrarPelicula(ePeliculas unaPelicula, eFechas Fecha, eGeneros generos[], 
 
     for(i=0; i<ta; i++)
     {
-        if(unaPelicula.idActor==actores[i].idActor)
+        if(unaPelicula.idActor==actores[i].idActor && actores[i].estadoActor!=LIBRE)
         {
             strcpy(actor, actores[i].nombre);
-            strcpy(pais, actores[i].paisOrigen);
             break;
         }
     }
 
-    printf("%d\t%s\t\t%d/%d/%d\t\t%s\t\t%s\t\t%s\n", unaPelicula.idPelicula, unaPelicula.titulo, Fecha.dia, Fecha.mes, Fecha.anio, genero, actor, pais);
+    printf("%d\t%s\t\t%d/%d/%d\t\t%s\t\t%s\n", unaPelicula.idPelicula, unaPelicula.titulo, Fecha.dia, Fecha.mes, Fecha.anio, genero, actor);
 
 }
 
@@ -245,9 +384,9 @@ void ordenarPorAnio(ePeliculas peliculas[],int tp,eFechas fechas[],int tf)
     ePeliculas auxiliar;
     eFechas auxiliarF;
 
-    for(i=0;i<tp-1;i++)
+    for(i=0; i<tp-1; i++)
     {
-        for(j=i+1;j<tf;j++)
+        for(j=i+1; j<tf; j++)
         {
             if(fechas[i].anio>fechas[j].anio)
             {
@@ -263,6 +402,8 @@ void ordenarPorAnio(ePeliculas peliculas[],int tp,eFechas fechas[],int tf)
     }
 }
 
+//_____________________________________________________
+
 void mostrarListaPeliculasPorAnio(ePeliculas peliculas[], int tp, eGeneros generos[], int tg, eActores actores[], int ta, eFechas fechas[])
 {
     int i;
@@ -277,17 +418,19 @@ void mostrarListaPeliculasPorAnio(ePeliculas peliculas[], int tp, eGeneros gener
     }
 }
 
+//_____________________________________________________
+
 void ordenarPorPais(eActores actores[],int ta)
 {
     int i;
     int j;
     eActores auxiliar;
 
-    for(i=0;i<ta-1;i++)
+    for(i=0; i<ta-1; i++)
     {
-        for(j=i+1;j<ta;j++)
+        for(j=i+1; j<ta; j++)
         {
-            if(stricmp(actores[i].paisOrigen,actores[j].paisOrigen)>0)
+            if(stricmp(actores[i].paisOrigen,actores[j].paisOrigen)>0 && actores[i].estadoActor!=LIBRE && actores[j].estadoActor!=LIBRE)
             {
                 auxiliar=actores[i];
                 actores[i]=actores[j];
@@ -298,10 +441,14 @@ void ordenarPorPais(eActores actores[],int ta)
     }
 }
 
+//_____________________________________________________
+
 void mostrarActor(eActores unActor)
 {
     printf("%s\t\t%s\n",unActor.paisOrigen, unActor.nombre);
 }
+
+//_____________________________________________________
 
 void mostrarListaActores(eActores actores[], int ta)
 {
@@ -309,6 +456,9 @@ void mostrarListaActores(eActores actores[], int ta)
     ordenarPorPais(actores,ta);
     for(i=0; i<ta; i++)
     {
+        if(actores[i].estadoActor!=LIBRE)
+        {
             mostrarActor(actores[i]);
+        }
     }
 }

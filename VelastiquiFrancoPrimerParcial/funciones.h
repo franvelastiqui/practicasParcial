@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "string.h"
 
 #define LIBRE 0
@@ -9,6 +10,7 @@ typedef struct
     int idActor;
     char nombre[31];
     char paisOrigen[21];
+    int estadoActor;
 } eActores;
 
 typedef struct
@@ -35,15 +37,19 @@ typedef struct
     int estado;
 } ePeliculas;
 
-void inicializarPeliculas(ePeliculas[],int);
+void inicializarPeliculasyActores(ePeliculas[],int,eActores[],int);
 
 int buscarLibre(ePeliculas[],int);
 
 void agregarPelicula(ePeliculas[],int,eGeneros[],int,eActores[],int,eFechas[]);
 
-void hardcodearDatos(ePeliculas[], int, eFechas[]);
+void hardcodearDatos(ePeliculas[], int, eFechas[], eActores[],int);
 
 int pedirInt(char[]);
+
+int validarDato(char[],int,int);
+
+char pedirChar(char[]);
 
 void modificarPelicula(ePeliculas[],int,eActores[],int,eFechas[],eGeneros[],int);
 

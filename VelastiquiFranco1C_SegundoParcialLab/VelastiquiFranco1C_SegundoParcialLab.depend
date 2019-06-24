@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1561388316 source:c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\controller.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+	"parser.h"
+
+1561387464 c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\linkedlist.h
+
+1561388316 c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\employee.h
+
+1561383635 c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\parser.h
+
+1561388331 source:c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\employee.c
+	"Employee.h"
+	<stdlib.h>
+	<stdio.h>
+	"string.h"
+
+1561387464 source:c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\linkedlist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+
+1561387613 source:c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+
+1561387464 c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\controller.h
+
+1561383635 source:c:\users\alumno\desktop\velastiquifranco1c_segundoparciallab\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+	"string.h"
+
